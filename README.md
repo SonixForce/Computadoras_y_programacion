@@ -1,2 +1,2 @@
-# programacion_y_computadoras
-Repositorio de los programas tarea que se dejan en la materia de programacion y computadoras
+# Computadoras_y_programacion
+Repositorio de los programas y tareas que se realizan en la materia de computadoras y programacion
