@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31727.386
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CYP02", "CYP02\CYP02.vcxproj", "{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}.Debug|x64.ActiveCfg = Debug|x64
+		{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}.Debug|x64.Build.0 = Debug|x64
+		{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}.Debug|x86.ActiveCfg = Debug|Win32
+		{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}.Debug|x86.Build.0 = Debug|Win32
+		{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}.Release|x64.ActiveCfg = Release|x64
+		{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}.Release|x64.Build.0 = Release|x64
+		{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}.Release|x86.ActiveCfg = Release|Win32
+		{EC970C8A-2C0C-452E-B3E8-B8886A1527DF}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB2FC61D-B5AD-43CD-9324-31753B34FCD3}
+	EndGlobalSection
+EndGlobal

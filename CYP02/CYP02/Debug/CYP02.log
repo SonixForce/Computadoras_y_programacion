@@ -1,0 +1,2 @@
+﻿  CYP02.cpp
+C:\Users\JEGar\source\repos\CYP02\CYP02\CYP02.cpp : fatal error C1041: no puede abrir la base de datos de programa 'C:\Users\JEGar\source\repos\CYP02\CYP02\Debug\vc142.pdb'. Si varios CL.EXE escriben en el mismo archivo .PDB, use /FS.

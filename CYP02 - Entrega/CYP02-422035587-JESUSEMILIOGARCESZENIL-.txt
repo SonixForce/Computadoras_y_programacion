@@ -1,0 +1,82 @@
+UNIVERSIDAD NACIONAL AUTONOMA DE MEXICO           
+FES ARAGON. D.R. 2020          
+Ernesto Peñaloza Romero 
+Fecha: 06/10/2021 
+Hora : 13:07:21.93 
+======================================= 
+.           
+.           
+.           
+ESTILO 
+================= 
+.           
+.           
+.           
+COMPILANDO 
+================= 
+CYP02.cpp
+Generando código
+Generación de código finalizada
+.          
+.          
+PROBANDO PROGRAMA   
+================= 
+ESTILO    
+=================
+Resultado          :  2
+VALOR DEL ESTILO   :  2
+
+
+CORRECCION    
+=================
+
+Prueba 1: Valores del tamaño aleatorias
+_________________________________
+==> OK.
+.
+Resultado: 30/30
+.
+.
+Prueba 2: Valores del corrimiento aleatorias
+_________________________________
+==> OK.
+.
+Resultado: 30/30
+.
+.
+Prueba 3: Datos limite
+_________________________________
+==> OK.
+.
+Resultado: 8/8
+.
+.
+.
+.
+Prueba del valor de retorno
+_________________________________
+==> OK
+.
+Resultado: 1/1
+.
+.
+TOTAL    : 68/68
+.
+VALOR DE LA EVALUACION DE LA CORRECCION   :  7.00
+.
+.
+CONCLUSIONES    
+=================
+Resultado          :  1
+VALOR DE LAS CONCLUSIONES    :  1
+.
+EVALUACION FINAL     
+==============
+NUMERO DE CUENTA: 422035587
+
+.
+.
+	EVALUACION TOTAL: 10.00
+.           
+.           
+.           

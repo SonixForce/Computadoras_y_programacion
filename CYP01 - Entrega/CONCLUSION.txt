@@ -1,0 +1,2 @@
+422035587
+Este es un programa sencillo donde nada más se utilizan las funciones más básicas de C, que son el printf y en el scanf, aún así, ya sea por la propia naturaleza de este trabajo o por cómo está descrito, creo que es una forma bastante creativa de enseñar a cómo se utilizan las variables y como pueden interactuar entre sí.

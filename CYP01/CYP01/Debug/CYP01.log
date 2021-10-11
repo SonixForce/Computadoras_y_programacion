@@ -1,0 +1,6 @@
+﻿  CYP01.cpp
+D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\CYP01\CYP01\CYP01.cpp(35,22): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\CYP01\CYP01\CYP01.cpp(36,22): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\CYP01\CYP01\CYP01.cpp(38,29): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\CYP01\CYP01\CYP01.cpp(39,29): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  CYP01.vcxproj -> D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\CYP01\Debug\CYP01.exe
