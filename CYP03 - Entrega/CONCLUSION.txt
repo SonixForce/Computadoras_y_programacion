@@ -1,0 +1,2 @@
+422035587
+Esta fue una asignación interesante pero algo laboriosa, pues al no tener la posibilidad de usar funciones para hacer las conversiones de dias, meses y años, para adaptarlos a cada situación, hay que ser bastante precavido al utilizar las condicionales if else, pues con un mal manejo uno se puede perder bastante en su propio código.
