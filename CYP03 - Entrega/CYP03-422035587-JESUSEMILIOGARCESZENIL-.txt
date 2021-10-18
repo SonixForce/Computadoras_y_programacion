@@ -1,0 +1,91 @@
+UNIVERSIDAD NACIONAL AUTONOMA DE MEXICO           
+FES ARAGON. D.R. 2020          
+Ernesto Peñaloza Romero 
+Fecha: 15/10/2021 
+Hora : 19:22:51.26 
+======================================= 
+.           
+.           
+.           
+ESTILO 
+================= 
+.           
+.           
+.           
+COMPILANDO 
+================= 
+CYP03.cpp
+Generando código
+Generación de código finalizada
+.          
+.          
+PROBANDO PROGRAMA   
+================= 
+ESTILO    
+=================
+Resultado          :  2
+VALOR DEL ESTILO   :  2
+
+
+CORRECCION    
+=================
+
+* 53 Pruebas de fechas aleatorias
+_________________________________
+==> OK.
+.
+Resultado: 53/53[  0.20%]
+.
+.
+* 24 Pruebas de fechas limite
+_________________________________
+==> OK.
+.
+Resultado: 24/24 [  0.20%]
+.
+.
+* 6 Pruebas de fechas en año bisiesto
+_________________________________
+==> OK.
+.
+Resultado: 6/6 [  0.20%]
+.
+.
+* 3 Pruebas de fechas de inicio de año Gregoriano
+_________________________________
+==> OK.
+.
+Resultado: 3/3 [  0.20%]
+.
+.
+.
+.
+.
+.
+* Prueba del valor de retorno
+_________________________________
+==> OK
+.
+Resultado: 1/1
+.
+.
+TOTAL    :  10.00
+.
+VALOR DE LA EVALUACION DE LA CORRECCION   :  7.00
+.
+.
+CONCLUSIONES    
+=================
+Resultado          :  1
+VALOR DE LAS CONCLUSIONES    :  1
+.
+EVALUACION FINAL     
+==============
+NUMERO DE CUENTA: 422035587
+
+.
+.
+	EVALUACION TOTAL: 10.00
+.           
+.           
+.           
