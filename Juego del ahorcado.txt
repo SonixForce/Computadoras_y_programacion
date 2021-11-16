@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main(){
+
+char diccionario[3][30] = { "pitufifresas","parangaruicutirimicuaro","UNAM" };
+    char cadena[30];
+    char palabramostrada[30];
+    char nombre[30];
+    int oportunidad=5;
+    int k=0;
+    
+    //sustituir letras por asteriscos
+    int quierejugar = 1;
+    while (quierejugar)
+    {
+
+        strcpy_s(cadena, 30, diccionario[k]);
+        int i = 0;
+        int ilong = 0;
+        while (cadena[i])
+        {
+            palabramostrada[i++] = '*';
+            ilong++;
+        }
+        palabramost
+      printf("Juego del ahorcado\n");
+        oportunidad = 5;
+        printf("Palabra: %s\n", palabramostrada);
+        int hayAsters = 1;
+        int letraEncontrada;
+        while (hayAsters && oportunidad)
+        {
+            printf("Letra: "); scanf_s("%s", nombre, 20);
+
+            //Para cada letra en la cadena
+            letraEncontrada = 0;
+            for (i = 0; i < ilong; i++)
+            {
+                //compara contra la letras que nos dieron
+                if (toupper(caden
+if (toupper(cadena[i]) == toupper(nombre[0]))
+                {
+                    palabramostrada[i] = nombre[0];
+                    letraEncontrada = 1;
+                }
+            }
+            printf("Palabra: %s\n", palabramostrada);
+   if (!letraEncontrada)
+            {
+                oportunidad--;
+                printf("Esa letra no existe en la palabra\n");
+                switch (oportunidad)
+                {
+                case 4:
+                    printf("**Lo sacaron de la celda\n");
+                    break;
+                case 3:
+                    printf("**Lo llevan por el patio de la prision\n");
+                    break;
+                case 2:
+                    printf("**Ya le pusieron la soga\n")
+ case 1:
+                    printf("**ESTAN POR SOLTARLO\n");
+                    break;
+
+                case 0:
+                    printf(" xP   [RIP]  \n");
+                    break;
+                default:
+                    break;
+                }
+            }
+    //averiguar si aun hay asteriscos en la palanbra
+            i = 0;
+            hayAsters = 0;
+            while (cadena[i] && !hayAsters)
+            {
+                if (palabramostrada[i++] == '*')
+                    hayAsters = 1;
+            }
+
+        }
+        printf("Deseas jugar de nuevo?[s/n]");
+        scanf_s("%s", nombre, 20);
+        if (tolower(nombre[0]) == 'n')
+            quierejugar = 0;
+    else
+            k++;
+    }
+    
+}

@@ -1,0 +1,3 @@
+﻿  CYP04.cpp
+D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\CYP04\CYP04\CYP04.cpp(23,13): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+  CYP04.vcxproj -> D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\CYP04\Debug\CYP04.exe
