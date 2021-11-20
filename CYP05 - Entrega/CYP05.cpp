@@ -5,14 +5,14 @@
 int main() {
 
 	//Variables
-	int cantAlum, cuentAlum[CANTIDAD] = {}, tempCuent, alumnFin = 1;
+	int cantAlum, cuentAlum[CANTIDAD] = {}, tempCuent, alumnFin = 0;
 	float califAlum[CANTIDAD] = {}, tempCalif;
 
 
 	//Detectar cantidad de alumnos, y con base a ello detectar poco a poco cada numero de cuenta y calificación.
 	scanf_s("%i", &cantAlum);
 
-	if (cantAlum != 0) {
+
 		for (int i = 0; i < cantAlum; i++) {
 			scanf_s("%i", &cuentAlum[i]);
 			scanf_s("%f", &califAlum[i]);
@@ -35,7 +35,7 @@ int main() {
 		//Eliminar numeros de cuenta repetidos y dejar solamente la calificación más alta.
 		for (int i = cantAlum; i != 0; i--) {
 			for (int c = 0; c + 1 <= i; c++) {
-				for(int b = c; cuentAlum[b] == cuentAlum[b + 1]; b++){
+				for (int b = c; cuentAlum[b] == cuentAlum[b + 1]; b++) {
 					if (califAlum[b] > califAlum[b + 1]) {
 						califAlum[b + 1] = califAlum[b];
 						califAlum[b] = NULL;
@@ -44,14 +44,13 @@ int main() {
 						califAlum[b] = NULL;
 					cuentAlum[c] = NULL;
 				}
-				
 			}
 		}
-
+		
 		//Pasar registros vacíos hasta el final de cada arreglo
 		for (int i = cantAlum; i != 0; i--) {
 			for (int c = 0; c + 1 <= i; c++) {
-				if (cuentAlum[c] == NULL && cuentAlum[c + 1] != NULL && califAlum[c] == NULL && califAlum[c + 1] != NULL) {
+				if (cuentAlum[c] == NULL && cuentAlum[c + 1] != NULL) {
 					cuentAlum[c] = cuentAlum[c + 1];
 					califAlum[c] = califAlum[c + 1];
 					cuentAlum[c + 1] = NULL;
@@ -61,10 +60,10 @@ int main() {
 		}
 
 		//Reconteo de la cantidad de alumnos final
-		for (int i = cantAlum; i != 0; i--) {
-			if (cuentAlum[i] != 0)
-				alumnFin += 1;
-		}
+		for (int c = 0; c <= cantAlum; c++)
+			if (cuentAlum[c] != 0)
+				alumnFin++;
+
 		
 		//Iprimir cantidad de alumnos, numeros de cuenta y calificaciones.
 		printf("%i\n", alumnFin);
@@ -75,9 +74,6 @@ int main() {
 			if (cuentAlum[p + 1] == NULL && califAlum[p + 1] == NULL)
 				break;
 		}
-	}
-	else {
 		return 0;
 	}
-	return 0;
-}
+	

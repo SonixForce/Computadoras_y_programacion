@@ -1,0 +1,2 @@
+422035587
+Esta ha sido una de las asignaciones más interesantes hasta la fecha, pues esta requirió de un analisis muy complejo, pues fue muy importante el entender bien cómo funcionan los arrays y sobre todo los ciclos con los que trabajamos.

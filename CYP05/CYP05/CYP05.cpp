@@ -13,7 +13,6 @@ int main() {
 	scanf_s("%i", &cantAlum);
 
 
-	if (cantAlum != 0) {
 		for (int i = 0; i < cantAlum; i++) {
 			scanf_s("%i", &cuentAlum[i]);
 			scanf_s("%f", &califAlum[i]);
@@ -47,7 +46,7 @@ int main() {
 				}
 			}
 		}
-		// && califAlum[c] == NULL && califAlum[c + 1] != NULL
+		
 		//Pasar registros vacíos hasta el final de cada arreglo
 		for (int i = cantAlum; i != 0; i--) {
 			for (int c = 0; c + 1 <= i; c++) {
@@ -61,12 +60,9 @@ int main() {
 		}
 
 		//Reconteo de la cantidad de alumnos final
-		//for (int i = 0; i <= cantAlum; i++)
-			for (int c = 0; c <= cantAlum; c++)
-				if (cuentAlum[c] != 0)
-					alumnFin++;
-		//alumnFin /= cantAlum;
-
+		for (int c = 0; c <= cantAlum; c++)
+			if (cuentAlum[c] != 0)
+				alumnFin++;
 
 		
 		//Iprimir cantidad de alumnos, numeros de cuenta y calificaciones.
@@ -78,9 +74,6 @@ int main() {
 			if (cuentAlum[p + 1] == NULL && califAlum[p + 1] == NULL)
 				break;
 		}
-	}
-	else {
 		return 0;
 	}
-	return 0;
-}
+	
