@@ -25,80 +25,121 @@
 void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[], int& iNumElementos)
 {
 	//Variables de texto previas hechas para el procesado del texto del archivo
-	char texto[NUMPALABRAS][TAMTOKEN] = {};
-	char textoLimpio[NUMPALABRAS][TAMTOKEN] = {};
-	char temp[NUMPALABRAS][TAMTOKEN] = {};
-	
-	//Conteo de palabras que hay en el archivo sin modificar
-	int palabras = 0;
+	char texto[1][TAMTOKEN] = {};
+	memset(szPalabras, 0, TAMTOKEN);
+	//char textoLimpio[60000][TAMTOKEN] = {};
+	char temp[60000][TAMTOKEN] = {};
 
 	//El archivo xd
 	FILE* archivo;
 	fopen_s(&archivo, szNombre, "r");
 	
 	//Checar si se pudo abrir el archivo
+	
 	if (archivo != NULL) {
-
 		//Leer todo el archivo hasta su final, guardando todo el texto del mismo en un array
 		while (!feof(archivo)) {
 			for (int i = 0; i != NUMPALABRAS; i++) {
 				//fgets(texto[i], NUMPALABRAS, archivo);
-				fscanf(archivo, "%s", texto[i]);
+				fscanf(archivo, "%s", szPalabras[i]);
 				//printf("%s\n", texto[i]);
 			}
 		}
 
-		//Conteo de cuantas palabras sin modificar hay en el archivo
-		int j = 0;
-		int conteo = 0;
-		while (texto[j][0] != NULL) {
-			conteo++;
-			j++;
+		for (int i = 0; i = NUMPALABRAS; i++) {
+			if (strlen(szPalabras[i]) == 0)
+				szPalabras = NULL;
+
 		}
 
-		iEstadisticas[conteo];
+		//Conteo de cuantas palabras sin modificar que hay en el archivo
+		iNumElementos = 0;
+		for (int j = 0; strlen(szPalabras[j]) != 0; j++) {
+			iNumElementos++;
+		}
+
 
 		//Ciclo principal para el procesado de arrays
-		for (int i = 0; i <= conteo; i++) {
+		for (int i = 0; i <= iNumElementos; i++) {
 
-			//Este ciclo detecta los carácteres especiales y mayúsculas en el array y los quita
+			//Este ciclo detecta los carácteres especiales y los quita
 			for (int c = 0; c <= TAMTOKEN; c++) {
-				if (texto[i][c] != '(' && texto[i][c] != ')' && texto[i][c] != ',' && texto[i][c] != '.' && texto[i][c] != '-' && texto[i][c] != '_' && texto[i][c] != '¿' && texto[i][c] != '?' && texto[i][c] != '¡' && texto[i][c] != '!' && texto[i][c] != '"' && texto[i][c] != ':' && texto[i][c] != '\'')
-					textoLimpio[i][c] = texto[i][c];
-				textoLimpio[i][c] = towlower(textoLimpio[i][c]);
+				if (szPalabras[i][c] == '(' || szPalabras[i][c] == ')' || szPalabras[i][c] == ',' || szPalabras[i][c] == '.' || szPalabras[i][c] == '-' || szPalabras[i][c] == '_' || szPalabras[i][c] == '¿' || szPalabras[i][c] == '?' || szPalabras[i][c] == '¡' || szPalabras[i][c] == '!' || szPalabras[i][c] == '"' || szPalabras[i][c] == ':' || szPalabras[i][c] == '\'' || szPalabras[i][c] == ';' || szPalabras[i][c] == '[' || szPalabras[i][c] == ']' || szPalabras[i][c] == '{' || szPalabras[i][c] == '}' || szPalabras[i][c] == '#' || szPalabras[i][c] == '&' || szPalabras[i][c] == '$' || szPalabras[i][c] == '%' || szPalabras[i][c] == '/')
+					szPalabras[i][c] = NULL;
 			}
+			for (int c = 0; c <= TAMTOKEN; c++)
+			if (szPalabras[i][c] == NULL) {
+				szPalabras[i][c] = szPalabras[i][c + 1];
+				szPalabras[i][c + 1] = NULL;
+			}
+
+			for (int c = 0; c <= iNumElementos; c++) {
+				memcpy(temp[c], szPalabras[c], TAMTOKEN);
+				printf("%s\n", temp[c]);
+			}
+				
 
 			//Este ciclo detecta los espacios vacíos dejados por los carácteres especiales y los quita
+			for (int c = 0; c <= iNumElementos - 1; c++) {
+				if (strlen(szPalabras[c]) == 0) {
+					memcpy(texto[c], szPalabras[c], TAMTOKEN);
+					memcpy(szPalabras[c], szPalabras[c + 1], TAMTOKEN);
+					memcpy(szPalabras[c + 1], texto[c], TAMTOKEN);
+				}
+			}
+
+			//Quita las mayusculas del texto
 			for (int c = 0; c <= TAMTOKEN; c++) {
-				if (textoLimpio[i][c] == NULL) {
-					temp[i][c] = textoLimpio[i][c];
-					textoLimpio[i][c] = textoLimpio[i][c + 1];
-					textoLimpio[i][c + 1] = temp[i][c];
+				szPalabras[i][c] = towlower(szPalabras[i][c]);
+			}
+			memset(texto, 0, TAMTOKEN);
+		}
+		
+
+		//Ordenar palabras alfabeticamente
+		for (int i = 0; i <= iNumElementos; i++) {
+			for (int c = 0; c < iNumElementos - 1; c++) {
+				if (strcmp(szPalabras[c], szPalabras[c + 1]) > 0) {
+					memcpy(texto, szPalabras[c], TAMTOKEN);
+					memcpy(szPalabras[c], szPalabras[c + 1], TAMTOKEN);
+					memcpy(szPalabras[c + 1], texto, TAMTOKEN);
 				}
 			}
 		}
+		//memset(temp, 0, TAMTOKEN);
 
-		//Este no sirve ayuda por favor no se por que no sirve
-		for (int i = 0; i <= conteo; i++) {
-			//int comp = strcmp(szPalabras[i], textoLimpio[i]);
-			if (szPalabras[i] == textoLimpio[i]) {
-					iEstadisticas[i] = 1;
-			}
-			else if (szPalabras[i] != textoLimpio[i])
-				for (int c = 0; c <= TAMTOKEN; c++) {
-					szPalabras[i][c] = textoLimpio[i][c];
-					iEstadisticas[i] = 0;
+		//Eliminar palabras repetidas del array
+		for (int i = 0; i <= iNumElementos; i++) {
+			for (int n = 0; n <= iNumElementos - 1; n++) {
+				if (strcmp(szPalabras[n], szPalabras[n + 1]) != 0) {
+					memcpy(texto[n], szPalabras[n], TAMTOKEN);
+					iEstadisticas[n] += 1;
 				}
-			//printf("%s\t\t\t%i\n", szPalabras[i], iEstadisticas[i]);
+			}
 		}
+		//memset(textoLimpio, 0, TAMTOKEN);
 
-		for (int i = 0; i <= conteo; i++) 
-			printf("%s\t\t\t%i\n", szPalabras[i], iEstadisticas[i]);
+		//Mover espacios vacíos del array al final del mismo y mandar todos sus datos a la variable szPalabras
+		for (int i = 0; i <= iNumElementos; i++) {
+			for (int c = 0; c <= iNumElementos - 1; c++) {
+				iEstadisticas[c] = 1;
+				if (strlen(texto[c]) == 0) {
+					iEstadisticas[c] = +1;
+					memcpy(szPalabras[c], texto[c + 1], TAMTOKEN);
+					memcpy(texto[c + 1], texto[c], TAMTOKEN);
+					memcpy(texto[c], szPalabras[c], TAMTOKEN);
+				}
+			}
+			memcpy(szPalabras[i], texto[i], TAMTOKEN);
+		}
+		memset(texto, 0, TAMTOKEN);
+
+		//Recontar palabras
+		iNumElementos = 0;
+		for (int j = 0; szPalabras[j][0] != NULL; j++) {
+			iNumElementos++;
+		}
 	}
-	else {
-		printf("El nombre del archivo es incorrecto.");
-	}
-	
 }
 
 /*****************************************************************************************************************
