@@ -15,6 +15,34 @@
 #include "corrector.h"
 #include <stdio.h>
 //Funciones publicas del proyecto
+
+//void buscador(char palabra[][TAMTOKEN], char dicc[][TAMTOKEN], int elementos, int *cantPalabra) {
+//	bool palabraEncontrada = false;
+//	char tempPalabra[1][TAMTOKEN];
+//
+//	for(int i = 0; i < elementos && !palabraEncontrada; i++)
+//		if (strcmp(palabra[0], dicc[i]) < 0)
+//		{
+//			palabraEncontrada = true;
+//		}
+//		else {
+//			strcpy(dicc[i], palabra[0]);
+//		}
+//}
+
+void ordenar(char dicc[][TAMTOKEN], int elementos) {
+	char temp[1][TAMTOKEN];
+	for (int i = 0; i < elementos; i++)
+		for (int c = 0; c < elementos - 1; c++)
+			if (strcmp(dicc[c], dicc[c + 1]) > 0 && strlen(dicc[c+1]) != 0) {
+				memcpy(temp[0], dicc[c + 1],TAMTOKEN);
+				memcpy(dicc[c + 1], dicc[c], TAMTOKEN);
+				memcpy(dicc[c], temp[0], TAMTOKEN);
+				memset(temp[0], 0, TAMTOKEN);
+			}
+}
+
+
 /*****************************************************************************************************************
 	DICCIONARIO: Esta funcion crea el diccionario completo
 	char *	szNombre				:	Nombre del archivo de donde se sacaran las palabras del diccionario	
@@ -25,120 +53,116 @@
 void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[], int& iNumElementos)
 {
 	//Variables de texto previas hechas para el procesado del texto del archivo
-	char texto[1][TAMTOKEN] = {};
+	char texto[2][TAMTOKEN] = {};
+	bool palabraCopiada;
 	memset(szPalabras, 0, TAMTOKEN);
-	//char textoLimpio[60000][TAMTOKEN] = {};
-	char temp[60000][TAMTOKEN] = {};
-
+	iNumElementos = 0;
+	
 	//El archivo xd
 	FILE* archivo;
 	fopen_s(&archivo, szNombre, "r");
 	
 	//Checar si se pudo abrir el archivo
-	
 	if (archivo != NULL) {
 		//Leer todo el archivo hasta su final, guardando todo el texto del mismo en un array
 		while (!feof(archivo)) {
-			for (int i = 0; i != NUMPALABRAS; i++) {
-				//fgets(texto[i], NUMPALABRAS, archivo);
-				fscanf(archivo, "%s", szPalabras[i]);
-				//printf("%s\n", texto[i]);
-			}
-		}
-
-		for (int i = 0; i = NUMPALABRAS; i++) {
-			if (strlen(szPalabras[i]) == 0)
-				szPalabras = NULL;
-
-		}
-
-		//Conteo de cuantas palabras sin modificar que hay en el archivo
-		iNumElementos = 0;
-		for (int j = 0; strlen(szPalabras[j]) != 0; j++) {
-			iNumElementos++;
-		}
-
-
-		//Ciclo principal para el procesado de arrays
-		for (int i = 0; i <= iNumElementos; i++) {
+			//fgets(texto[0], NUMPALABRAS, archivo);
+			fscanf(archivo, "%s", texto[0]);
+			iNumElementos += 1;
+			palabraCopiada = false;
 
 			//Este ciclo detecta los carácteres especiales y los quita
-			for (int c = 0; c <= TAMTOKEN; c++) {
-				if (szPalabras[i][c] == '(' || szPalabras[i][c] == ')' || szPalabras[i][c] == ',' || szPalabras[i][c] == '.' || szPalabras[i][c] == '-' || szPalabras[i][c] == '_' || szPalabras[i][c] == '¿' || szPalabras[i][c] == '?' || szPalabras[i][c] == '¡' || szPalabras[i][c] == '!' || szPalabras[i][c] == '"' || szPalabras[i][c] == ':' || szPalabras[i][c] == '\'' || szPalabras[i][c] == ';' || szPalabras[i][c] == '[' || szPalabras[i][c] == ']' || szPalabras[i][c] == '{' || szPalabras[i][c] == '}' || szPalabras[i][c] == '#' || szPalabras[i][c] == '&' || szPalabras[i][c] == '$' || szPalabras[i][c] == '%' || szPalabras[i][c] == '/')
-					szPalabras[i][c] = NULL;
+			for (int i = 0; i < TAMTOKEN && !palabraCopiada; i++) {
+				if (texto[0][i] == '(' || texto[0][i] == ')' || texto[0][i] == ',' || texto[0][i] == '.' || texto[0][i] == ';')
+					texto[0][i] = NULL;
+				else if (texto[0][i] == NULL)
+					palabraCopiada = true;
 			}
-			for (int c = 0; c <= TAMTOKEN; c++)
-			if (szPalabras[i][c] == NULL) {
-				szPalabras[i][c] = szPalabras[i][c + 1];
-				szPalabras[i][c + 1] = NULL;
-			}
+			palabraCopiada = false;
 
-			for (int c = 0; c <= iNumElementos; c++) {
-				memcpy(temp[c], szPalabras[c], TAMTOKEN);
-				printf("%s\n", temp[c]);
-			}
-				
+			//Elimina cadenas y espacios vacios
+			for (int i = 0; i < TAMTOKEN; i++)
+				if (texto[0][i] == NULL) {
+					texto[0][i] = texto[0][i + 1];
+					texto[0][i + 1] = NULL;
+				}
 
-			//Este ciclo detecta los espacios vacíos dejados por los carácteres especiales y los quita
-			for (int c = 0; c <= iNumElementos - 1; c++) {
-				if (strlen(szPalabras[c]) == 0) {
-					memcpy(texto[c], szPalabras[c], TAMTOKEN);
-					memcpy(szPalabras[c], szPalabras[c + 1], TAMTOKEN);
-					memcpy(szPalabras[c + 1], texto[c], TAMTOKEN);
+			//printf("%s\n", texto[0]);
+
+		//Quita todas las mayusculas
+			for (int i = 0; i < strlen(texto[0]); i++)
+				texto[0][i] = towlower(texto[0][i]);
+
+			//Se guarda palabra por palabra dentro del diccionario
+			for (int i = 0; i < iNumElementos && !palabraCopiada; i++) {
+				if (szPalabras[i][0] == 'Ì' || szPalabras[i][0] == '\0') {
+					memcpy(szPalabras[i], texto[0], TAMTOKEN);
+					memset(texto[0], 0, TAMTOKEN);
+					//printf("%s\n", szPalabras[i]);
+					palabraCopiada = true;
 				}
 			}
 
-			//Quita las mayusculas del texto
-			for (int c = 0; c <= TAMTOKEN; c++) {
-				szPalabras[i][c] = towlower(szPalabras[i][c]);
-			}
-			memset(texto, 0, TAMTOKEN);
-		}
-		
+			//buscador(texto, szPalabras, iNumElementos, iEstadisticas);
 
-		//Ordenar palabras alfabeticamente
-		for (int i = 0; i <= iNumElementos; i++) {
-			for (int c = 0; c < iNumElementos - 1; c++) {
-				if (strcmp(szPalabras[c], szPalabras[c + 1]) > 0) {
-					memcpy(texto, szPalabras[c], TAMTOKEN);
-					memcpy(szPalabras[c], szPalabras[c + 1], TAMTOKEN);
-					memcpy(szPalabras[c + 1], texto, TAMTOKEN);
+			/*for (int i = 0; i < iNumElementos; i++) {
+				if (strcmp(szPalabras[i], szPalabras[i + 1]) != 0) {
+
+				}
+			}*/
+
+		}
+		//printf("Palabras leidas\n");
+		ordenar(szPalabras, iNumElementos);
+		//printf("Palabras ordenadas\n");
+		int buffer = 0;
+		for (int i = 0; i < iNumElementos; i++) {
+			if (strcmp(szPalabras[i], szPalabras[i + 1]) == 0) {
+				memset(szPalabras[i], 0, TAMTOKEN);
+			}
+			if (strlen(szPalabras[i]) == 0) {
+				iEstadisticas[i] = NULL;
+				buffer++;
+			}
+			else {
+				iEstadisticas[i] = 1 + buffer;
+				buffer = 0;
+			}
+		}
+		//printf("Palabras repetidas eliminadas\n");
+
+		/*	for (int i = 0; i <= iNumElementos; i++) {
+				iEstadisticas[i] = 1;
+				if (strlen(szPalabras[i]) == 0) {
+					iEstadisticas[i] += 1;
+				}
+		}*/
+		buffer = 0;
+		for (int c = 0; c < iNumElementos; c++) {
+			for (int i = 0; i < iNumElementos - 1; i++) {
+				if (strlen(szPalabras[i]) == 0) {
+					strcpy_s(texto[0], szPalabras[i]);
+					strcpy_s(szPalabras[i], szPalabras[i + 1]);
+					strcpy_s(szPalabras[i + 1], texto[0]);
+					buffer = iEstadisticas[i];
+					iEstadisticas[i] = iEstadisticas[i + 1];
+					iEstadisticas[i + 1] = buffer;
+					memset(texto, 0, TAMTOKEN);
 				}
 			}
 		}
-		//memset(temp, 0, TAMTOKEN);
 
-		//Eliminar palabras repetidas del array
-		for (int i = 0; i <= iNumElementos; i++) {
-			for (int n = 0; n <= iNumElementos - 1; n++) {
-				if (strcmp(szPalabras[n], szPalabras[n + 1]) != 0) {
-					memcpy(texto[n], szPalabras[n], TAMTOKEN);
-					iEstadisticas[n] += 1;
-				}
-			}
-		}
-		//memset(textoLimpio, 0, TAMTOKEN);
-
-		//Mover espacios vacíos del array al final del mismo y mandar todos sus datos a la variable szPalabras
-		for (int i = 0; i <= iNumElementos; i++) {
-			for (int c = 0; c <= iNumElementos - 1; c++) {
-				iEstadisticas[c] = 1;
-				if (strlen(texto[c]) == 0) {
-					iEstadisticas[c] = +1;
-					memcpy(szPalabras[c], texto[c + 1], TAMTOKEN);
-					memcpy(texto[c + 1], texto[c], TAMTOKEN);
-					memcpy(texto[c], szPalabras[c], TAMTOKEN);
-				}
-			}
-			memcpy(szPalabras[i], texto[i], TAMTOKEN);
-		}
-		memset(texto, 0, TAMTOKEN);
-
-		//Recontar palabras
+		//printf("Fin\n");
 		iNumElementos = 0;
-		for (int j = 0; szPalabras[j][0] != NULL; j++) {
+		for (int i = 0; strlen(szPalabras[i]) != 0; i++)
 			iNumElementos++;
-		}
+
+			/*if (strlen(szPalabras[i]) == 0)
+				strcpy(szPalabras[i], szPalabras[i + 1]);
+
+		}*/
+
+		fclose(archivo);
 	}
 }
 
@@ -166,7 +190,7 @@ void	ListaCandidatas		(
 {
 
 	//Sustituya estas lineas por su código
-	strcpy(szListaFinal[0], szPalabrasSugeridas[ 0] ); //la palabra candidata
+	strcpy_s(szListaFinal[0], szPalabrasSugeridas[ 0] ); //la palabra candidata
 	iPeso[0] = iEstadisticas[0];			// el peso de la palabra candidata
 	
 	iNumLista = 1;							//Una sola palabra candidata
@@ -184,6 +208,6 @@ void	ClonaPalabras(
 	int &	iNumSugeridas)						//Numero de elementos en la lista
 {
 	//Sustituya estas lineas por su código
-	strcpy(szPalabrasSugeridas[0], szPalabraLeida); //lo que sea que se capture, es sugerencia
+	strcpy_s(szPalabrasSugeridas[0], szPalabraLeida); //lo que sea que se capture, es sugerencia
 	iNumSugeridas = 1;							//Una sola palabra sugerida
 }

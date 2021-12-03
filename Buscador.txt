@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+#define NUMDATOS	5
+#define VERDADERO	1
+#define FALSO		0
+
+
+int buscador(int item, int arr[], int numElementos)
+{
+	int lEncontrado = FALSO;
+	int i;
+	int posicion = -1;
+	
+	// busqueda secuencial
+	i = 0;
+	while (i < numElementos && !lEncontrado)
+	{
+		printf("Comparando %i %i\n", item, arr[i]);
+		if (item == arr[i])
+		{
+			lEncontrado = VERDADERO;
+			posicion = i;
+		}
+		i++;
+	}
+
+	return posicion;
+}
+
+int main()
+{
+	int datos[NUMDATOS];
+	int pos;
+	int i;
+	int elDato;
+
+	// genera dato
+	for (i = 0; i < NUMDATOS; i++)
+	{
+		datos[i] = NUMDATOS - i;
+	}
+
+	printf("Dato a buscar: ");
+	scanf_s("%i", &elDato);
+	// busca el dato
+	pos = buscador(elDato, datos, NUMDATOS);
+
+	//Se muestra el resultado
+	if (pos != -1)
+	{
+		printf("El dato fue encontrado en la posicion %i", pos);
+	}
+	else
+		printf("El dato no fue encontrado");
+
+}

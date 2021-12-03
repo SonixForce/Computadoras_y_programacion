@@ -1,6 +1,5 @@
 ﻿  Corrector.cpp
-D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\quisodecirAlumnos\quisodecir\Corrector.cpp(92,32): warning C4244: '=': conversión de 'wint_t' a 'char'; posible pérdida de datos
-D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\quisodecirAlumnos\quisodecir\Corrector.cpp(44,5): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\quisodecirAlumnos\quisodecir\Corrector.cpp(168,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\quisodecirAlumnos\quisodecir\Corrector.cpp(186,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\quisodecirAlumnos\quisodecir\Corrector.cpp(93,22): warning C4018: '<': no coinciden signed/unsigned
+D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\quisodecirAlumnos\quisodecir\Corrector.cpp(94,27): warning C4244: '=': conversión de 'wint_t' a 'char'; posible pérdida de datos
+D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\quisodecirAlumnos\quisodecir\Corrector.cpp(70,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   quisodecir.vcxproj -> D:\JEGar\Documents\Escuela\Programacion\Computadoras_y_programacion\quisodecirAlumnos\Debug\quisodecir.exe

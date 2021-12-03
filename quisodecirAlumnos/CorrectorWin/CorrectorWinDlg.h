@@ -39,7 +39,7 @@ public:
 	char	szNombre[MAX_PATH];
 	char	szPalabras[NUMPALABRAS][TAMTOKEN];
 	int		iEstadisticas[NUMPALABRAS];
-	int		iNumElementos;
+	int		dicc;
 	CEdit txtTextoCapturado;
 	afx_msg void OnCambiaTextoPredectivo();
 	CListBox m_lstPrediccion;
