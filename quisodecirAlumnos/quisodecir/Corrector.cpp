@@ -16,33 +16,6 @@
 #include <stdio.h>
 //Funciones publicas del proyecto
 
-//void buscador(char palabra[][TAMTOKEN], char dicc[][TAMTOKEN], int elementos, int *cantPalabra) {
-//	bool palabraEncontrada = false;
-//	char tempPalabra[1][TAMTOKEN];
-//
-//	for(int i = 0; i < elementos && !palabraEncontrada; i++)
-//		if (strcmp(palabra[0], dicc[i]) < 0)
-//		{
-//			palabraEncontrada = true;
-//		}
-//		else {
-//			strcpy(dicc[i], palabra[0]);
-//		}
-//}
-
-void ordenar(char dicc[][TAMTOKEN], int elementos) {
-	char temp[1][TAMTOKEN];
-	for (int i = 0; i < elementos; i++)
-		for (int c = 0; c < elementos - 1; c++)
-			if (strcmp(dicc[c], dicc[c + 1]) > 0 && strlen(dicc[c+1]) != 0) {
-				memcpy(temp[0], dicc[c + 1],TAMTOKEN);
-				memcpy(dicc[c + 1], dicc[c], TAMTOKEN);
-				memcpy(dicc[c], temp[0], TAMTOKEN);
-				memset(temp[0], 0, TAMTOKEN);
-			}
-}
-
-
 /*****************************************************************************************************************
 	DICCIONARIO: Esta funcion crea el diccionario completo
 	char *	szNombre				:	Nombre del archivo de donde se sacaran las palabras del diccionario	
@@ -53,117 +26,109 @@ void ordenar(char dicc[][TAMTOKEN], int elementos) {
 void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[], int& iNumElementos)
 {
 	//Variables de texto previas hechas para el procesado del texto del archivo
-	char texto[2][TAMTOKEN] = {};
+	char temp[1][TAMTOKEN] = {};
 	bool palabraCopiada;
-	memset(szPalabras, 0, TAMTOKEN);
 	iNumElementos = 0;
+	int lonPalabra = 0;
+	int tempo = 0;
+	char* token;
 	
 	//El archivo xd
 	FILE* archivo;
 	fopen_s(&archivo, szNombre, "r");
 	
 	//Checar si se pudo abrir el archivo
-	if (archivo != NULL) {
+	if (archivo != NULL && iNumElementos <= 16400) {
+		palabraCopiada = false;
+		token = {"1"};
 		//Leer todo el archivo hasta su final, guardando todo el texto del mismo en un array
-		while (!feof(archivo)) {
-			//fgets(texto[0], NUMPALABRAS, archivo);
-			fscanf(archivo, "%s", texto[0]);
-			iNumElementos += 1;
-			palabraCopiada = false;
 
-			//Este ciclo detecta los carácteres especiales y los quita
-			for (int i = 0; i < TAMTOKEN && !palabraCopiada; i++) {
-				if (texto[0][i] == '(' || texto[0][i] == ')' || texto[0][i] == ',' || texto[0][i] == '.' || texto[0][i] == ';')
-					texto[0][i] = NULL;
-				else if (texto[0][i] == NULL)
-					palabraCopiada = true;
-			}
-			palabraCopiada = false;
+		for (int i = 0; !feof(archivo); i++) {
+			
+			//fgets(szPalabras[i],TAMTOKEN,archivo);
+			if (szPalabras[i][0] < 32 && szPalabras[i][0] > 126);
+				fscanf(archivo, "%50s", szPalabras[i]);
 
-			//Elimina cadenas y espacios vacios
-			for (int i = 0; i < TAMTOKEN; i++)
-				if (texto[0][i] == NULL) {
-					texto[0][i] = texto[0][i + 1];
-					texto[0][i + 1] = NULL;
-				}
+			//printf("%s\n", szPalabras[i]);
+			lonPalabra = strlen(szPalabras[i]);
 
-			//printf("%s\n", texto[0]);
 
-		//Quita todas las mayusculas
-			for (int i = 0; i < strlen(texto[0]); i++)
-				texto[0][i] = towlower(texto[0][i]);
-
-			//Se guarda palabra por palabra dentro del diccionario
-			for (int i = 0; i < iNumElementos && !palabraCopiada; i++) {
-				if (szPalabras[i][0] == 'Ì' || szPalabras[i][0] == '\0') {
-					memcpy(szPalabras[i], texto[0], TAMTOKEN);
-					memset(texto[0], 0, TAMTOKEN);
-					//printf("%s\n", szPalabras[i]);
-					palabraCopiada = true;
-				}
-			}
-
-			//buscador(texto, szPalabras, iNumElementos, iEstadisticas);
-
-			/*for (int i = 0; i < iNumElementos; i++) {
-				if (strcmp(szPalabras[i], szPalabras[i + 1]) != 0) {
-
-				}
-			}*/
-
-		}
-		//printf("Palabras leidas\n");
-		ordenar(szPalabras, iNumElementos);
-		//printf("Palabras ordenadas\n");
-		int buffer = 0;
-		for (int i = 0; i < iNumElementos; i++) {
-			if (strcmp(szPalabras[i], szPalabras[i + 1]) == 0) {
-				memset(szPalabras[i], 0, TAMTOKEN);
-			}
-			if (strlen(szPalabras[i]) == 0) {
-				iEstadisticas[i] = NULL;
-				buffer++;
-			}
-			else {
-				iEstadisticas[i] = 1 + buffer;
-				buffer = 0;
-			}
-		}
-		//printf("Palabras repetidas eliminadas\n");
-
-		/*	for (int i = 0; i <= iNumElementos; i++) {
-				iEstadisticas[i] = 1;
-				if (strlen(szPalabras[i]) == 0) {
-					iEstadisticas[i] += 1;
-				}
-		}*/
-		buffer = 0;
-		for (int c = 0; c < iNumElementos; c++) {
-			for (int i = 0; i < iNumElementos - 1; i++) {
-				if (strlen(szPalabras[i]) == 0) {
-					strcpy_s(texto[0], szPalabras[i]);
-					strcpy_s(szPalabras[i], szPalabras[i + 1]);
-					strcpy_s(szPalabras[i + 1], texto[0]);
-					buffer = iEstadisticas[i];
-					iEstadisticas[i] = iEstadisticas[i + 1];
-					iEstadisticas[i + 1] = buffer;
-					memset(texto, 0, TAMTOKEN);
-				}
-			}
-		}
-
-		//printf("Fin\n");
-		iNumElementos = 0;
-		for (int i = 0; strlen(szPalabras[i]) != 0; i++)
 			iNumElementos++;
 
-			/*if (strlen(szPalabras[i]) == 0)
-				strcpy(szPalabras[i], szPalabras[i + 1]);
+			//Quitar signos de puntuacion al inicio de todas las palabras
 
-		}*/
+			for (int c = lonPalabra; c != -1; c--) {
+				if (szPalabras[i][c] == '(' || szPalabras[i][c] == ')' || szPalabras[i][c] == ',' || szPalabras[i][c] == '.' || szPalabras[i][c] == ';') {
+					szPalabras[i][c] = NULL;
+				}
+				//Quitar mayusculas
+				if (szPalabras[i][c] >= 65 && szPalabras[i][c] <= 90)
+					szPalabras[i][c] += 32;
+			}
+
+			//Este ciclo detecta los carácteres especiales y mayúsculas en el array y los quita
+			/*for (int c = 0; c <= TAMTOKEN; c++) {
+				
+			}*/
+
+			//Quitar espacios vacios dentro de cada palabra
+			for (int c = 0; c < lonPalabra; c++) {
+				if (szPalabras[i][c] == NULL) {
+					temp[0][c] = szPalabras[i][c];
+					szPalabras[i][c] = szPalabras[i][c + 1];
+					szPalabras[i][c + 1] = temp[0][c];
+				}
+			}
+			iEstadisticas[i] = 1;
+			memset(temp, 0, TAMTOKEN);
+
+			for (int c = 0; c < i; c++) {
+				if (strcmp(szPalabras[i], szPalabras[c]) < 0) {
+					strcpy_s(temp[0], szPalabras[c]);
+					strcpy_s(szPalabras[c], szPalabras[i]);
+					strcpy_s(szPalabras[i], temp[0]);
+
+					tempo = iEstadisticas[c];
+					iEstadisticas[c] = iEstadisticas[i];
+					iEstadisticas[i] = tempo;
+
+				}
+
+				if (strcmp(szPalabras[i], szPalabras[c]) == 0) {
+					memset(szPalabras[i], 0, TAMTOKEN);
+					i--;
+					iNumElementos--;
+					iEstadisticas[c] += 1;
+				}
+
+				if (strlen(szPalabras[i]) == 0) {
+					iEstadisticas[i] = 0;
+				}
+			}
+
+			//printf("%s\n", szPalabras[i]);
+		}
+		memset(temp, 0, TAMTOKEN);
 
 		fclose(archivo);
+
+		if (strlen(szPalabras[0]) == 0) {
+			for (int i = 0; i < iNumElementos; i++)
+			{
+				strcpy_s(temp[0], szPalabras[i + 1]);
+				strcpy_s(szPalabras[i + 1], szPalabras[i]);
+				strcpy_s(szPalabras[i], temp[0]);
+
+				tempo = iEstadisticas[i];
+				iEstadisticas[i] = iEstadisticas[i + 1];
+				iEstadisticas[i + 1] = tempo;
+			}
+			iNumElementos--;
+		}
+
 	}
+	else
+		printf("Archivo no encontrado\n");
 }
 
 /*****************************************************************************************************************
