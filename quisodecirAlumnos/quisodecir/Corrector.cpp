@@ -27,37 +27,81 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 {
 	//Variables de texto previas hechas para el procesado del texto del archivo
 	char temp[1][TAMTOKEN] = {};
-	bool palabraCopiada;
 	iNumElementos = 0;
-	int lonPalabra = 0;
-	int tempo = 0;
+	int lonPalabra;
+	int tempo;
 	char* token;
+	char* sigToken;
 	
 	//El archivo xd
 	FILE* archivo;
 	fopen_s(&archivo, szNombre, "r");
 	
 	//Checar si se pudo abrir el archivo
-	if (archivo != NULL && iNumElementos <= 16400) {
-		palabraCopiada = false;
-		token = {"1"};
+	if (archivo != NULL) {
+		token = {};
 		//Leer todo el archivo hasta su final, guardando todo el texto del mismo en un array
 
 		for (int i = 0; !feof(archivo); i++) {
 			
-			//fgets(szPalabras[i],TAMTOKEN,archivo);
-			if (szPalabras[i][0] < 32 && szPalabras[i][0] > 126);
-				fscanf(archivo, "%50s", szPalabras[i]);
+			//fgets(szPalabras[i],TAMTOKEN,archivo);+
+			
+			//Antes de copiar las palabras, se checa si la nueva posición de i ya contiene una palabra valida.
+			if (szPalabras[i][0] < 32 || szPalabras[i][0] > 126)
+				fscanf_s(archivo, "%s", szPalabras[i],TAMTOKEN);
 
 			//printf("%s\n", szPalabras[i]);
 			lonPalabra = strlen(szPalabras[i]);
 
-
 			iNumElementos++;
 
-			//Quitar signos de puntuacion al inicio de todas las palabras
+			//Detectar signos de puntuación dentro de las palabras y en caso de que haya alguno, se separa la palabra usando como base ese signo de puntuación
+			for (int c = 0; c <= lonPalabra; c++) {
+				if (szPalabras[i][c] == '(') {
+					token = strtok_s(szPalabras[i], "(", &sigToken);
+					if (token != NULL) {
+						strcpy_s(szPalabras[i + 1], sigToken);
+						//c--;
+					}
+					lonPalabra = strlen(szPalabras[i]);
+					
+				}
+				else if (szPalabras[i][c] == ')') {
+					token = strtok_s(szPalabras[i], ")", &sigToken);
+					if (token != NULL) {
+						strcpy_s(szPalabras[i + 1], sigToken);
+						//c--;
+					}
+					lonPalabra = strlen(szPalabras[i]);
+				}
+				else if (szPalabras[i][c] == ',') {
+					token = strtok_s(szPalabras[i], ",", &sigToken);
+					if (token != NULL) {
+						strcpy_s(szPalabras[i + 1], sigToken);
+						//c--;
+					}
+					lonPalabra = strlen(szPalabras[i]);
+				}
+				else if (szPalabras[i][c] == '.') {
+					token = strtok_s(szPalabras[i], ".", &sigToken);
+					if (token != NULL) {
+						strcpy_s(szPalabras[i + 1], sigToken);
+						//c--;
+					}
+					lonPalabra = strlen(szPalabras[i]);
+				}
+				else if (szPalabras[i][c] == ';') {
+					token = strtok_s(szPalabras[i], ";", &sigToken);
+					if (token != NULL) {
+						strcpy_s(szPalabras[i + 1], sigToken);
+						//c--;
+					}
+					lonPalabra = strlen(szPalabras[i]);
+				}
+			}
 
-			for (int c = lonPalabra; c != -1; c--) {
+			//Quitar signos de puntuacion en las palabras que no se pudieron separar, o a las cuales no hubo necesidad de hacerlo
+			for (int c = 0; c <= lonPalabra; c++) {
 				if (szPalabras[i][c] == '(' || szPalabras[i][c] == ')' || szPalabras[i][c] == ',' || szPalabras[i][c] == '.' || szPalabras[i][c] == ';') {
 					szPalabras[i][c] = NULL;
 				}
@@ -66,22 +110,20 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 					szPalabras[i][c] += 32;
 			}
 
-			//Este ciclo detecta los carácteres especiales y mayúsculas en el array y los quita
-			/*for (int c = 0; c <= TAMTOKEN; c++) {
-				
-			}*/
-
 			//Quitar espacios vacios dentro de cada palabra
 			for (int c = 0; c < lonPalabra; c++) {
-				if (szPalabras[i][c] == NULL) {
-					temp[0][c] = szPalabras[i][c];
-					szPalabras[i][c] = szPalabras[i][c + 1];
-					szPalabras[i][c + 1] = temp[0][c];
+				for (int n = 0; n < lonPalabra; n++) {
+					if (szPalabras[i][n] == NULL) {
+						temp[0][n] = szPalabras[i][n];
+						szPalabras[i][n] = szPalabras[i][n + 1];
+						szPalabras[i][n + 1] = temp[0][n];
+					}
 				}
 			}
 			iEstadisticas[i] = 1;
 			memset(temp, 0, TAMTOKEN);
 
+			//Las palabras se van ordenando a la vez que se van añadiendo al arreglo, a la vez que se quitan palabras repetidas y se detectan strings vacios.
 			for (int c = 0; c < i; c++) {
 				if (strcmp(szPalabras[i], szPalabras[c]) < 0) {
 					strcpy_s(temp[0], szPalabras[c]);
@@ -112,6 +154,12 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 
 		fclose(archivo);
 
+		/*for (int i = 0; i < iNumElementos; i++)
+		{
+			printf("%s", szPalabras[i]);
+		}*/
+		
+		//Se quitan los strings vacios resultantes de strings hechos puramente de símbolos de puntuación
 		if (strlen(szPalabras[0]) == 0) {
 			for (int i = 0; i < iNumElementos; i++)
 			{
@@ -172,7 +220,112 @@ void	ClonaPalabras(
 	char	szPalabrasSugeridas[][TAMTOKEN], 	//Lista de palabras clonadas
 	int &	iNumSugeridas)						//Numero de elementos en la lista
 {
-	//Sustituya estas lineas por su código
-	strcpy_s(szPalabrasSugeridas[0], szPalabraLeida); //lo que sea que se capture, es sugerencia
-	iNumSugeridas = 1;							//Una sola palabra sugerida
+	int lenPalabraBase = strlen(szPalabraLeida);
+	int lenPalabraExp;
+	char palabraOG[TAMTOKEN] = {};
+	iNumSugeridas = 0;
+	char temp;
+	char tempStr[TAMTOKEN] = {};
+	char alfabeto[32] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','p','q','r','s','t','u','v','w','x','y','z','á','é','í','ó','ú'};
+	int i = 0;
+	FILE* debug;
+
+	strcpy_s(palabraOG, szPalabraLeida);
+	
+	//Eliminacion
+	while (i < lenPalabraBase) {
+		szPalabraLeida[i] = NULL;
+		for (int c = 0; c < lenPalabraBase; c++) {
+			if (szPalabraLeida[c] == NULL) {
+				szPalabraLeida[c] = szPalabraLeida[c + 1];
+				szPalabraLeida[c + 1] = NULL;
+			}
+		}
+		strcpy_s(szPalabrasSugeridas[i], szPalabraLeida);
+		iNumSugeridas++;
+		strcpy(szPalabraLeida, palabraOG);
+		i++;
+	}
+	lenPalabraExp = lenPalabraBase+lenPalabraBase;
+
+	//Transposicion
+	while (i < lenPalabraExp) {
+		for (int c = 0; c < lenPalabraBase; c++){
+			if (szPalabraLeida[c + 1] != NULL) {
+				temp = szPalabraLeida[c];
+				szPalabraLeida[c] = szPalabraLeida[c + 1];
+				szPalabraLeida[c + 1] = temp;
+				strcpy_s(szPalabrasSugeridas[i], szPalabraLeida);
+				iNumSugeridas++;
+				strcpy(szPalabraLeida, palabraOG);
+			}
+			i++;
+		}
+	}
+	strcpy(szPalabraLeida, palabraOG);
+	i--;
+
+	lenPalabraExp += (lenPalabraBase * 32);
+
+	//Sustitucion
+	while (i < lenPalabraExp) {
+		for (int c = 0; c < lenPalabraBase; c++){
+			for (int n = 0; n < 32; n++){
+				szPalabraLeida[c] = alfabeto[n];
+				strcpy_s(szPalabrasSugeridas[i], szPalabraLeida);
+				i++;
+				iNumSugeridas++;
+				strcpy(szPalabraLeida, palabraOG);
+			}
+		}
+	}
+	//Ordenar
+	for (int c = 0; c < lenPalabraExp; c++) {
+		for (int j = 0; j < lenPalabraExp; j++) {
+			if (strcmp(szPalabrasSugeridas[j], szPalabrasSugeridas[j + 1]) > 0) {
+				strcpy_s(tempStr, szPalabrasSugeridas[j]);
+				strcpy_s(szPalabrasSugeridas[j], szPalabrasSugeridas[j + 1]);
+				strcpy_s(szPalabrasSugeridas[j + 1], tempStr);
+			}
+		}
+	}
+
+	lenPalabraExp += ((lenPalabraBase + 1) * 32);
+
+	//Adicion
+	while (i < lenPalabraExp) {
+		for (int c = 0; c < lenPalabraBase + 1; c++){
+			for (int n = lenPalabraBase + 1; n != c - 1; n--) {
+				temp = szPalabraLeida[n];
+				szPalabraLeida[n] = szPalabraLeida[n - 1];
+				szPalabraLeida[n + 1] = temp;
+			}
+			for (int n = 0; n < 32; n++) {
+				szPalabraLeida[c] = alfabeto[n];
+				strcpy_s(szPalabrasSugeridas[i], szPalabraLeida);
+				i++;
+				iNumSugeridas++;
+			}
+			strcpy(szPalabraLeida, palabraOG);
+		}
+	}
+
+	lenPalabraExp = iNumSugeridas;
+
+	//Ordenar
+	for (int c = 0; c < lenPalabraExp; c++) {
+		for (int j = 0; j < lenPalabraExp - 1; j++) {
+			if (strcmp(szPalabrasSugeridas[j], szPalabrasSugeridas[j + 1]) > 0) {
+				strcpy_s(tempStr, szPalabrasSugeridas[j]);
+				strcpy_s(szPalabrasSugeridas[j], szPalabrasSugeridas[j + 1]);
+				strcpy_s(szPalabrasSugeridas[j + 1], tempStr);
+			}
+		}
+	}
+
+	//debug
+	fopen_s(&debug,"debug.txt", "w");
+	for(int c = 0; c < iNumSugeridas; c++)
+	fprintf(debug, "%s\n", szPalabrasSugeridas[c]);
+	fclose(debug);
 }
